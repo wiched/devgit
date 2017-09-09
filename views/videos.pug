@@ -1,0 +1,15 @@
+extends layout
+
+include mixins/_videoCard
+include mixins/_pagination
+include mixins/_reviewForm
+include mixins/_review
+
+block content
+  .inner
+    h2= title
+    .stores
+      each video in videos
+        //- pre= h.dump(video)
+        +videoCard(video)
+    +pagination(page, pages, count)

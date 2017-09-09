@@ -1,0 +1,6 @@
+mixin forgotForm()
+  form.form(action="/account/forgot" method="POST")
+    h2 Забравена парола
+    label(for="email") Имейл
+    input(type="email" name="email")
+    input.button(type="submit" value="Ресет на парола")

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .inner
+    h2 Редактиране на профила
+    form(action="/account" method="POST")
+      label(for="name") Име
+      input(type="text" name="name" value=user.name)
+      label(for="email") Имейл адрес
+      input(type="email" name="email" value=user.email)
+      label(for="password") Нова Парола 
+      input(type="password" name="password")
+      label(for="password-confirm") Потвърди паролата
+      input(type="password" name="password-confirm")
+      label(for="level") Ниво
+      - let level = user.level === 10 ? 'Администратор' : 'Потребител'
+      div.level= level
+      input.button(type="submit" value="Обнови")

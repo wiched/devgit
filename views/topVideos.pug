@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .inner
+    h2 Топ #{topVideos.length}
+    .Table
+      .Table-row.Table-header
+        .Table-row-item Снимка
+        .Table-row-item Ранк
+        .Table-row-item Име
+        .Table-row-item Коментари
+        .Table-row-item Среден рейтинг
+      each topVideo, i in topVideos
+        .Table-row
+          .Table-row-item(data-header='Снимка')  
+            - const category = topVideo.type === 'Podcast' ? 'podcast' : 'video'
+            a(href=`/${category}/${topVideo.slug}`)
+              img(width=200 src=`/uploads/${topVideo.photo || 'placeholder.jpg'}` alt=topVideo.name)
+          .Table-row-item(data-header='Ранк')   #{i + 1}
+          .Table-row-item(data-header='Име'): a(href=`/${category}/${topVideo.slug}`)= topVideo.name
+          .Table-row-item(data-header='Коментари')= topVideo.reviews.length
+          .Table-row-item(data-header='Рейтинг')   #{Math.round(topVideo.averageRating * 10) / 10} / 5

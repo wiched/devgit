@@ -1,0 +1,28 @@
+mixin podcastForm(podcast = {})
+  form(action=`/ataraxia/addpodcast/${podcast._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+    label(for="name") Име
+    input(type="text" name="name" value=podcast.name oninvalid="this.setCustomValidity('Това поле е задължително')" required)
+    label(for="description") Описание
+    textarea(name="description" id="textarea" required)= podcast.description
+    label(for="slug") Слъг
+    input(type="text" name="slug" value=podcast.slug)
+    label(for="podcast") Подкаст адрес
+    input(type="text" name="podcast" value=podcast.podcast)
+    label(for="soundcloud") Подкаст адрес (soundcloud)
+    input(type="text" name="soundcloud" value=podcast.soundcloud required)
+    //- Image Upload
+    label(for="photo") Снимка
+      input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+      if podcast.photo
+        img(src=`/uploads/${podcast.photo}`, alt=podcast.name width=200)
+    - const choices = ['JavaScript', 'HTML5', 'Family Friendly', 'Vegatarian', 'Licensed']
+    - const tags = podcast.tags || []
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
+          label(for=choice) #{choice}
+    input(type="submit" value="Запази →" class="button")
+  if currentPath !== '/ataraxia/addpodcast'
+    form(action=`/ataraxia/delete/podcast/${podcast._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+      input(type="submit" value="⚠️  Изтрий ⚠️" class="button--danger" onclick="return confirm('Are you sure?')")

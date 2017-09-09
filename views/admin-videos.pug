@@ -1,0 +1,34 @@
+extends adminlayout
+
+include mixins/_videoCard
+
+block content
+  .inner
+    h2= title
+    .Table
+      .Table-row.Table-header
+        .Table-row-item Заглавие
+        .Table-row-item Коментари
+        .Table-row-item Гледания
+        .Table-row-item Лайкове
+        .Table-row-item Дислайкове
+        .Table-row-item Коментари
+        .Table-row-item Редактирай
+        .Table-row-item Изтриване
+        .Table-row-item Създадено
+      each video in videosWithStats
+        .Table-row
+          .Table-row-item(data-header='Заглавие') 
+            a(href=`/video/${video.slug}`) #{video.name}
+          .Table-row-item(data-header='Коментари') #{video.reviews.length}
+          .Table-row-item(data-header='Гледания') #{video.stats.items[0].statistics.viewCount}
+          .Table-row-item(data-header='Лайкове') #{video.stats.items[0].statistics.likeCount}
+          .Table-row-item(data-header='Дислайкове ') #{video.stats.items[0].statistics.dislikeCount}
+          .Table-row-item(data-header='Коментари') #{video.stats.items[0].statistics.commentCount}
+          .Table-row-item(data-header='Редактирай')
+            a(href=`/ataraxia/videos/${video._id}/edit`) Редактирай
+          .Table-row-item(data-header='Изтриване') 
+            form(action=`/ataraxia/delete/video/${video._id || ''}` method="POST"  enctype="multipart/form-data")
+              input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
+          - const createdDate = h.moment(video.created).locale('bg').format('DD.MM.YYYY')
+          .Table-row-item(data-header='Създадено') #{createdDate}

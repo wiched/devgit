@@ -1,0 +1,42 @@
+extends layout
+
+include mixins/_reviewForm
+include mixins/_review
+include mixins/_loginToComment
+
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${video.photo || 'placeholder.jpg'}`)
+      h2.title.title--single
+        a(href=`/video/${video.slug}`) #{video.name}
+
+  .single__details.inner
+    //- img.single__cover(src=`/uploads/${video.photo || 'placeholder.jpg'}`)
+    //- p.single__location Първи епизод на DevZone.BG подкаст
+    if video.youtube
+      - const youtube = video.youtube.slice(-11);
+      .media
+        .media__video
+          iframe(width='420', height='315', allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" 
+          oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" src=`https://www.youtube.com/embed/${youtube}?rel=0`)
+            
+    p= video.description
+
+    if video.tags
+      ul.tags
+        each tag in video.tags
+          li.tag
+            a.tag__link(href=`/tags/${tag}`)
+              span.tag__text  ##{tag}
+
+    if user
+      +reviewForm(video)
+    else 
+      +loginToComment()
+      
+    if video.reviews
+      .reviews
+        each review in video.reviews
+          .review
+            +review(review)

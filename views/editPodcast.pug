@@ -1,0 +1,8 @@
+extends adminlayout
+
+include mixins/_podcastForm
+
+block content
+  .inner
+    h2= title
+    +podcastForm(podcast)

@@ -1,0 +1,11 @@
+mixin paginationPodcasts(page, pages, count)
+  .pagination
+    .pagination__prev
+      if page > 1
+        a(href=`/podcast/page/${page - 1}`) Предишна
+    .pagination__text
+      p Страница #{page} от #{pages} — общо #{count} резултати
+    .pagination__next
+      if page < pages
+        a(href=`/podcast/page/${parseFloat(page) + 1}`) Следваща
+      

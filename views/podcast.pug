@@ -1,0 +1,53 @@
+extends layout
+
+include mixins/_reviewForm
+include mixins/_review
+include mixins/_loginToComment
+
+block opengraph
+  meta(content=`${title} | ${h.siteName}`, property='og:title')
+  meta(content=`http://${host}${url}`, property='og:url')
+  meta(content=`http://${host}/uploads/${podcast.photo}`, property='og:image')
+  meta(content=`${podcast.description}`, property='og:description')
+  meta(name='twitter:title' content=`${title} | ${h.siteName}`)
+  meta(name='twitter:description' content=`${podcast.description}`)
+  meta(name='twitter:image' content=`http://${host}/uploads/${podcast.photo}`)
+  meta(name='twitter:site' content='@devzonebg')
+  meta(name='twitter:creator' content='@devzonebg')
+  meta(name='description' content=`${podcast.description}`)
+block content
+  .single
+    .single__hero
+      img.single__image(src=`/uploads/${podcast.photo || 'placeholder.jpg'}`)
+      h2.title.title--single
+        a(href=`/podcast/${podcast.slug}`) #{podcast.name}
+
+  .single__details.inner
+    img.single__cover(src=`/uploads/${podcast.photo || 'placeholder.jpg'}`)
+    p.single__location Първи епизод на DevZone.BG подкаст
+
+    if podcast.podcast
+      audio.podcast(controls='')
+        source(src=`${podcast.podcast}`, type='audio/mpeg')
+    if podcast.soundcloud
+      .podcast
+        iframe(width='100%', height='166', scrolling='no', frameborder='no', src=`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${podcast.soundcloud}&auto_play=false&hide_related=true&show_comments=true&show_user=true&show_reposts=false&visual=false`) 
+    p= podcast.description 
+    
+    if podcast.tags
+      ul.tags
+        each tag in podcast.tags
+          li.tag
+            a.tag__link(href=`/tags/${tag}`)
+              span.tag__text  ##{tag}
+
+    if user
+      +reviewForm(podcast)
+    else 
+      +loginToComment()
+      
+    if podcast.reviews
+      .reviews
+        each review in podcast.reviews
+          .review
+            +review(review)

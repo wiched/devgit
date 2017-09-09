@@ -1,0 +1,22 @@
+extends layout
+
+include mixins/_podcastCard
+include mixins/_videoCard
+include mixins/_pagination
+
+block content
+  .inner
+    h2 Последни видеа
+    .stores
+      each video in videos
+        +videoCard(video)
+    .flex-center
+      a.button.button--show-all(href='/videos') Виж всички
+    h2(style='margin-top: 75px') Последни подкасти
+    .stores
+      each podcast in podcasts
+        +podcastCard(podcast)
+    .flex-center
+      a.button.button--show-all(href='/podcast') Виж всички
+
+        

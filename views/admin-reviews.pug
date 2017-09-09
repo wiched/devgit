@@ -1,0 +1,45 @@
+extends adminlayout
+
+block content
+  .inner.inner--full-table
+    h2 Коментари от видеа
+    .reviews
+      each video in videos
+        each review in video.reviews.slice(0, 5)
+          .review
+            .review__header
+              .review__author
+                  p От: #{review.author.name}
+              .review__author
+                - const category = video.type === 'Video' ? 'video' : 'podcast'
+                - Object.setPrototypeOf(video.reviews, Object.prototype);
+                  a(href=`/${category}/${video.slug}`) #{video.name}
+              .review__stars(title=`Rated ${review.rating} our of 5 stars`)
+                = `★`.repeat(review.rating)
+                = `☆`.repeat(5 - review.rating)
+              time.review__time(datetime=review.created)= h.moment(review.created).locale('bg').fromNow()
+            .review__body
+              p= review.text
+              form(action=`/ataraxia/delete/review/${review._id || ''}` method="POST"  enctype="multipart/form-data")
+                input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
+  .inner.inner--full-table
+    h2 Коментари от подкасти
+    .reviews
+      each podcast in podcasts
+        each review in podcast.reviews.slice(0, 3)
+          .review
+            .review__header
+              .review__author
+                  p От: #{review.author.name}
+              .review__author
+                - const category = podcast.type === 'Video' ? 'video' : 'podcast'
+                - Object.setPrototypeOf(podcast.reviews, Object.prototype)
+                  a(href=`/${category}/${podcast.slug}`) #{podcast.name}
+              .review__stars(title=`Rated ${review.rating} our of 5 stars`)
+                = `★`.repeat(review.rating)
+                = `☆`.repeat(5 - review.rating)
+              time.review__time(datetime=review.created)= h.moment(review.created).locale('bg').fromNow()
+            .review__body
+              p= review.text
+              form(action=`/ataraxia/delete/review/${review._id || ''}` method="POST"  enctype="multipart/form-data")
+                input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")

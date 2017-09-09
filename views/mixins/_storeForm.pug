@@ -1,0 +1,26 @@
+mixin storeForm(video = {})
+  form(action=`/ataraxia/add/${video._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+    label(for="name") Име
+    input(type="text" name="name" value=video.name)
+    label(for="description") Описание
+    textarea(name="description")= video.description
+    label(for="slug") Слъг
+    input(type="text" name="slug" value=video.slug)
+    label(for="youtube") YouTube адрес
+    input(type="text" name="youtube" value=video.youtube required)
+    //- Image Upload
+    label(for="photo") Снимка
+      input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
+      if video.photo
+        img(src=`/uploads/${video.photo}`, alt=video.name width=200)
+    - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Vegatarian', 'Licensed']
+    - const tags = video.tags || []
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
+          label(for=choice) #{choice}
+    input(type="submit" value="Save →" class="button")
+  if currentPath !== '/ataraxia/addvideo'
+    form(action=`/ataraxia/delete/video/${video._id || ''}` method="POST" class="card" enctype="multipart/form-data")
+      input(type="submit" value="⚠️  Изтрий ⚠️" class="button--danger" onclick="return confirm('Are you sure?')")

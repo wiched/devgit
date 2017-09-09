@@ -1,0 +1,90 @@
+.Table {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0.5rem;
+  line-height: 1.5;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+}
+
+.Table-header {
+  display: none;
+}
+
+@media (min-width: 500px) {
+  .Table-header {
+    font-weight: 700;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  }
+}
+
+.Table-row {
+  width: 100%;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
+  &:nth-of-type(even) {
+    background-color: #f9f9f9;
+  }
+  &:nth-of-type(odd) {
+    background-color: #ffffff;
+
+  }
+}
+
+@media (min-width: 500px) {
+  .Table-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    &:nth-of-type(even) {
+      background-color: #ffffff;
+    }
+    &:nth-of-type(odd) {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+.Table-row-item {
+  display: flex;
+  flex-grow: 2;
+  flex-basis: 0;
+  padding: 0.5em;
+  word-break: break-word;
+  &:before {
+    content: attr(data-header);
+    width: 30%;
+    font-weight: 700;
+  }
+  a {
+    color: #0073aa !important;
+  }
+}
+.half-table {
+  flex-grow: 1 !important;
+}
+@media (min-width: 500px) {
+  .Table-row-item {
+    border: 1px solid #ffffff;
+    padding: 0.5em;
+    &:before {
+      content: none;
+    }
+  }
+
+}

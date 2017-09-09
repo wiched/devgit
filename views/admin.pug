@@ -1,0 +1,116 @@
+extends adminlayout
+
+block content
+  .inner.inner--full-table
+    .reviews
+      p
+      .review
+        .review__header
+          p
+            b Общо харесани: #{hearts[0].total}
+          p
+            b Харесани видеа: 
+          p
+            b Харесани подкасти: 
+    h2 Видеа
+    .Table
+      .Table-row.Table-header
+        .Table-row-item Заглавие
+        .Table-row-item Коментари
+        .Table-row-item Гледания
+        .Table-row-item Лайкове
+        .Table-row-item Дислайкове
+        .Table-row-item Коментари
+        .Table-row-item Редактирай
+        .Table-row-item Изтриване
+        .Table-row-item Създадено
+      each video in videosWithStats
+        .Table-row
+          .Table-row-item(data-header='Заглавие') 
+            a(href=`/video/${video.slug}`) #{video.name}
+          .Table-row-item(data-header='Коментари') #{video.reviews.length}
+          //- .Table-row-item(data-header='Харесано') #{video.liked.length}
+          .Table-row-item(data-header='Гледания') #{video.youtubeStats.items[0].statistics.viewCount}
+          .Table-row-item(data-header='Лайкове') #{video.youtubeStats.items[0].statistics.likeCount}
+          .Table-row-item(data-header='Дислайкове ') #{video.youtubeStats.items[0].statistics.dislikeCount}
+          .Table-row-item(data-header='Коментари') #{video.youtubeStats.items[0].statistics.commentCount}
+          .Table-row-item(data-header='Редактирай')
+            a(href=`/ataraxia/videos/${video._id}/edit`) Редактирай
+          .Table-row-item(data-header='Изтриване') 
+            form(action=`/ataraxia/delete/video/${video._id || ''}` method="POST"  enctype="multipart/form-data")
+              input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
+          - const createdDate = h.moment(video.created).locale('bg').format('DD.MM.YYYY')
+          .Table-row-item(data-header='Създадено') #{createdDate}
+  .inner.inner--full-table
+    h2 Подкасти
+    .Table
+      .Table-row.Table-header
+        .Table-row-item Заглавие
+        .Table-row-item.half-table Коментари
+        .Table-row-item.half-table Слушания
+        .Table-row-item.half-table Харесвания
+        .Table-row-item.half-table Сваляния
+        .Table-row-item.half-table Коментари
+        .Table-row-item.half-table Редактирай
+        .Table-row-item.half-table Изтриване
+        .Table-row-item.half-table Създадено
+      each podcast in podcastsWithStats
+        .Table-row
+          .Table-row-item(data-header='Заглавие') 
+            a(href=`/podcast/${podcast.slug}`) #{podcast.name}
+          .Table-row-item.half-table(data-header='Коментари') #{podcast.reviews.length}
+          .Table-row-item.half-table(data-header='Слушания') #{podcast.stats.playback_count}
+          .Table-row-item.half-table(data-header='Харесвануя') #{podcast.stats.favoritings_count}
+          .Table-row-item.half-table(data-header='Сваляния') #{podcast.stats.download_count}
+          .Table-row-item.half-table(data-header='Коментари') #{podcast.stats.comment_count}
+          .Table-row-item.half-table(data-header='Редактирай')
+            a(href=`/ataraxia/podcasts/${podcast._id}/edit`) Редактирай
+          .Table-row-item.half-table(data-header='Изтриване') 
+            form(action=`/ataraxia/delete/podcast/${podcast._id || ''}` method="POST"  enctype="multipart/form-data")
+              input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
+          - const createdDate = h.moment(podcast.created).locale('bg').format('DD.MM.YYYY')
+          .Table-row-item.half-table(data-header='Създадено') #{createdDate}
+
+  .inner.inner--full-table
+    h2 Коментари
+    .reviews
+      each result in results
+        each review in result.reviews.slice(0, 1)
+          .review
+            .review__header
+              .review__author
+                  //- p= result.name
+                  p От: #{review.author.name}
+              .review__author
+                - const category = result.type === 'Video' ? 'video' : 'podcast'
+                - Object.setPrototypeOf(result.reviews, Object.prototype);
+                  a(href=`/${category}/${result.slug}`) #{result.name}
+                  //- pre= h.dump(result)
+              .review__stars(title=`Rated ${review.rating} our of 5 stars`)
+                = `★`.repeat(review.rating)
+                = `☆`.repeat(5 - review.rating)
+              time.review__time(datetime=review.created)= h.moment(review.created).locale('bg').fromNow()
+            .review__body
+              p= review.text
+              form(action=`/ataraxia/delete/review/${review._id || ''}` method="POST"  enctype="multipart/form-data")
+                input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
+
+  //- .inner
+  //-   p Общо харесани: #{hearts[0].total}
+  //-   h2 Ревюта
+  //-   .Table(style="display: block")
+  //-     .Table-row.Table-header
+  //-       .Table-row-item Автор
+  //-       .Table-row-item Коментари
+  //-       .Table-row-item Рейтинг
+  //-       .Table-row-item Изтриване
+  //-       .Table-row-item Създадено
+  //-     each result in results
+  //-       //- pre= h.dump(podcast)
+  //-       - Object.setPrototypeOf(result.reviews, Object.prototype);
+  //-       .Table-row
+  //-         .Table-row-item(data-header='Автор')
+  //-           p= result.name
+  //-         each review in result.reviews
+  //-           .Table-row-item(data-header='Автор')
+  //-             p(style="display:block")= review.text
