@@ -7,7 +7,7 @@ mixin storeForm(video = {})
     label(for="slug") Слъг
     input(type="text" name="slug" value=video.slug)
     label(for="youtube") YouTube адрес
-    input(type="text" name="youtube" value=video.youtube required)
+    input(type="text" name="youtube" value=video.youtube)
     //- Image Upload
     label(for="photo") Снимка
       input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpeg")
