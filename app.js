@@ -32,6 +32,7 @@ app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'", 'cookiescriptcdn.pro', 'data:'],
     styleSrc: ["'self'", "'unsafe-inline'", 'data:'],
     scriptSrc: ["'self'", 'cookiescriptcdn.pro', "'unsafe-inline'"],
+    workerSrc: ["'self'", 'cookiescriptcdn.pro', "'unsafe-inline'", 'blob:'],
     imgSrc: ["'self'", 'gravatar.com', 'lorempixel.com'],
     frameSrc: ['*.youtube.com', '*.soundcloud.com'],
     mediaSrc: ["'self'", '*.amazonaws.com']

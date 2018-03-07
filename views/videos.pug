@@ -10,6 +10,6 @@ block content
     h2= title
     .stores
       each video in videos
-        //- pre= h.dump(video)
+        - pre= h.dump(video)
         +videoCard(video)
     +pagination(page, pages, count)

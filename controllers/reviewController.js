@@ -8,7 +8,7 @@ exports.addReview = async (req, res) => {
   const newReview = new Review(req.body);
   await newReview.save();
   req.flash('success', 'Коментарът е изпратен успешно. Благодаря за обратната връзка!');
-  res.redirect(req.originalUrl);
+  res.redirect('back');
 };
 
 exports.delete = async (req, res) => {

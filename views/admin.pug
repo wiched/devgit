@@ -9,9 +9,9 @@ block content
           p
             b Общо харесани: #{hearts[0].total}
           p
-            b Харесани видеа: 
+            b Харесани видеа:
           p
-            b Харесани подкасти: 
+            b Харесани подкасти:
     h2 Видеа
     .Table
       .Table-row.Table-header
@@ -26,7 +26,7 @@ block content
         .Table-row-item Създадено
       each video in videosWithStats
         .Table-row
-          .Table-row-item(data-header='Заглавие') 
+          .Table-row-item(data-header='Заглавие')
             a(href=`/video/${video.slug}`) #{video.name}
           .Table-row-item(data-header='Коментари') #{video.reviews.length}
           //- .Table-row-item(data-header='Харесано') #{video.liked.length}
@@ -36,7 +36,7 @@ block content
           .Table-row-item(data-header='Коментари') #{video.youtubeStats.items[0].statistics.commentCount}
           .Table-row-item(data-header='Редактирай')
             a(href=`/ataraxia/videos/${video._id}/edit`) Редактирай
-          .Table-row-item(data-header='Изтриване') 
+          .Table-row-item(data-header='Изтриване')
             form(action=`/ataraxia/delete/video/${video._id || ''}` method="POST"  enctype="multipart/form-data")
               input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
           - const createdDate = h.moment(video.created).locale('bg').format('DD.MM.YYYY')
@@ -56,7 +56,7 @@ block content
         .Table-row-item.half-table Създадено
       each podcast in podcastsWithStats
         .Table-row
-          .Table-row-item(data-header='Заглавие') 
+          .Table-row-item(data-header='Заглавие')
             a(href=`/podcast/${podcast.slug}`) #{podcast.name}
           .Table-row-item.half-table(data-header='Коментари') #{podcast.reviews.length}
           .Table-row-item.half-table(data-header='Слушания') #{podcast.stats.playback_count}
@@ -65,7 +65,7 @@ block content
           .Table-row-item.half-table(data-header='Коментари') #{podcast.stats.comment_count}
           .Table-row-item.half-table(data-header='Редактирай')
             a(href=`/ataraxia/podcasts/${podcast._id}/edit`) Редактирай
-          .Table-row-item.half-table(data-header='Изтриване') 
+          .Table-row-item.half-table(data-header='Изтриване')
             form(action=`/ataraxia/delete/podcast/${podcast._id || ''}` method="POST"  enctype="multipart/form-data")
               input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
           - const createdDate = h.moment(podcast.created).locale('bg').format('DD.MM.YYYY')

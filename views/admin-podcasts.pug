@@ -18,7 +18,7 @@ block content
         .Table-row-item.half-table Създадено
       each podcast in podcastsWithStats
         .Table-row
-          .Table-row-item(data-header='Заглавие') 
+          .Table-row-item(data-header='Заглавие')
             a(href=`/podcast/${podcast.slug}`) #{podcast.name}
           .Table-row-item.half-table(data-header='Коментари') #{podcast.reviews.length}
           .Table-row-item.half-table(data-header='Слушания') #{podcast.stats.playback_count}
@@ -27,7 +27,7 @@ block content
           .Table-row-item.half-table(data-header='Коментари') #{podcast.stats.comment_count}
           .Table-row-item.half-table(data-header='Редактирай')
             a(href=`/ataraxia/podcasts/${podcast._id}/edit`) Редактирай
-          .Table-row-item.half-table(data-header='Изтриване') 
+          .Table-row-item.half-table(data-header='Изтриване')
             form(action=`/ataraxia/delete/podcast/${podcast._id || ''}` method="POST"  enctype="multipart/form-data")
               input.button--simple-danger(type="submit" value="Изтрий" onclick="return confirm('Are you sure?')")
           - const createdDate = h.moment(podcast.created).locale('bg').format('DD.MM.YYYY')

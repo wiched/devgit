@@ -16,6 +16,7 @@ const soundcloudStats = episode => axios.get(`http://api.soundcloud.com/tracks/$
 const youtubeStatistics = episode => axios.get(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${episode}&key=AIzaSyDlX4G4_4HN4SW0jpHxtlLfQ2gPw2zn0l0`)
   .then((res) => {
     const youtubeStats = res.data;
+    console.log(res.data)
     return youtubeStats;
   }).catch((err) => {
     console.log(err);
